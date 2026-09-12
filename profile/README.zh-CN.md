@@ -31,7 +31,7 @@ OctoSense 走的是另一条路：保留人们已经熟悉的交互方式，把 
 | 语言 | [Octoscript](https://github.com/OctoSense-org/Octoscript) | 由 Makepad 的 Splash 演化而来、面向 Agent 需求优化的动态 DSL。无需编译即可实时解释执行应用逻辑并生成界面。用起来像 JavaScript，底座是 Rust。 |
 | 渲染 | [Octoscript-Makepad](https://github.com/OctoSense-org/Octoscript-Makepad) · [Octoscript-Android](https://github.com/OctoSense-org/Octoscript-Android) · [Octoscript-OH](https://github.com/OctoSense-org/Octoscript-OH) | 把 Octoscript 渲染到 Makepad、Android 原生控件和 OpenHarmony ArkUI。 |
 | App Card | [Octoscript-AppCard](https://github.com/OctoSense-org/Octoscript-AppCard) | 用 Octoscript 构建的可组合、可嵌入的应用模板与 applet。Card 可以相互嵌入、嵌入流程，生成的 Card 又可以成为更高层的模板。 |
-| 内核 | [octos](https://github.com/ymote/octos) | 可嵌入的 Rust 原生 Agent harness。多轮交互、上下文与记忆、模型 provider、多 agent 并发、工具与沙箱、用户审批，全部通过 OS UI protocol 提供给上层应用。 |
+| 内核 | [Octos](https://github.com/ymote/octos) | 可嵌入的 Rust 原生 Agent harness。多轮交互、上下文与记忆、模型 provider、多 agent 并发、工具与沙箱、用户审批，全部通过 OS UI protocol 提供给上层应用。 |
 
 一切都经由 Octoscript 动态执行，不需要编译，所以一个应用可以在几秒内换一种风格、多一个板块，或者变成另一个应用，由 Agent 的洞察驱动。
 
