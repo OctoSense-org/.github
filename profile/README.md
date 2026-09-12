@@ -31,7 +31,7 @@ Every app you see is a touchpoint. Behind all of them is one agent with one memo
 | Language | [Octoscript](https://github.com/OctoSense-org/Octoscript) | A dynamic DSL evolved from Makepad's Splash and tuned for agents. Interprets app logic and generates UI in real time with no compile step. JavaScript-like on the surface, Rust underneath. |
 | Renderers | [Octoscript-Makepad](https://github.com/OctoSense-org/Octoscript-Makepad) · [Octoscript-Android](https://github.com/OctoSense-org/Octoscript-Android) · [Octoscript-OH](https://github.com/OctoSense-org/Octoscript-OH) | Render Octoscript to Makepad, native Android widgets, and OpenHarmony ArkUI. |
 | App Cards | [Octoscript-AppCard](https://github.com/OctoSense-org/Octoscript-AppCard) | Composable, embeddable app templates and applets, built with Octoscript. Cards nest inside cards and flows, and generated cards can become templates for the next ones. |
-| Kernel | [octos](https://github.com/ymote/octos) | An embeddable, Rust-native agent harness. Multi-turn interaction, context and memory, model providers, concurrent agents, tools, sandboxing and user approval, exposed to apps through the OS UI protocol. |
+| Kernel | [Octos](https://github.com/ymote/octos) | An embeddable, Rust-native agent harness. Multi-turn interaction, context and memory, model providers, concurrent agents, tools, sandboxing and user approval, exposed to apps through the OS UI protocol. |
 
 Because everything runs through Octoscript without a compile step, an app can change style, gain a section, or become a new app within seconds, driven by what the agent has learned.
 
