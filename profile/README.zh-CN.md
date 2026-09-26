@@ -45,7 +45,7 @@ Card 之外还有一套 design system 流程：从一段文字描述生成 UI �
 
 任何人或编程 Agent 都可以为 OctoSense 开发应用，并发布到 App Hub。一个应用就是一个小包：`manifest.json` 声明所需权限，`main.splash` 是程序，再加上图片资源。应用在隔离环境中运行，并且从不收集密码：登录只在 OctoSense 自己的面板上进行。
 
-**编程 Agent 请按顺序先阅读：**
+**编程 Agent 请按顺序先阅读：** 任何 Agent 都可以（Codex、Claude Code、Cursor、Gemini CLI、GitHub Copilot），不用 Agent 也可以：每一步都是一条 shell 命令或一次文件修改，不依赖特定的 Agent、模型或厂商。
 
 1. [OctoScript-App-Design-Flow `AGENTS.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/AGENTS.md)：规则、完成标准，以及哪些环节必须停下来请人确认。
 2. [`flows/README.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/flows/README.md)：按起点选择设计流程（做应用：文字描述或生成的界面图；做主题套件：Sketch 设计套件），然后逐步执行该流程的 `FLOW.md`。
