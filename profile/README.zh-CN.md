@@ -27,16 +27,31 @@ OctoSense 走的是另一条路：保留人们已经熟悉的交互方式，把 
 
 | 层 | 项目 | 作用 |
 | --- | --- | --- |
-| Shell | [OctoSense](https://github.com/OctoSense-org/OctoSense) | 跨平台 Agent 交互 Shell，基于 [Makepad](https://github.com/OctoSense-org/makepad)。应用作为 Agent 的触点在其中运行。 |
-| 语言 | [Octoscript](https://github.com/OctoSense-org/Octoscript) | 由 Makepad 的 Splash 演化而来、面向 Agent 需求优化的动态 DSL。无需编译即可实时解释执行应用逻辑并生成界面。用起来像 JavaScript，底座是 Rust。 |
-| 渲染 | [Octoscript-Makepad](https://github.com/OctoSense-org/Octoscript-Makepad) · [Octoscript-Android](https://github.com/OctoSense-org/Octoscript-Android) · [Octoscript-OH](https://github.com/OctoSense-org/Octoscript-OH) | 把 Octoscript 渲染到 Makepad、Android 原生控件和 OpenHarmony ArkUI。 |
-| App Card | [Octoscript-AppCard](https://github.com/OctoSense-org/Octoscript-AppCard) | 用 Octoscript 构建的可组合、可嵌入的应用模板与 applet。Card 可以相互嵌入、嵌入流程，生成的 Card 又可以成为更高层的模板。 |
-| 内核 | [Octos](https://github.com/ymote/octos) | 可嵌入的 Rust 原生 Agent harness。多轮交互、上下文与记忆、模型 provider、多 agent 并发、工具与沙箱、用户审批，全部通过 OS UI protocol 提供给上层应用。 |
+| Shell | [OctoSense-ROM](https://github.com/OctoSense-org/OctoSense-ROM) · [OctoSense-Desktop](https://github.com/OctoSense-org/OctoSense-Desktop) | 基于 [Makepad](https://github.com/OctoSense-org/makepad) 的 Agent 交互 Shell。OctoSense-ROM 的 `home/` 是手机 Shell，既可作为桌面应用安装，也可烧录进 ROM 镜像（OnePlus 6 上的 LineageOS）；OctoSense-Desktop 是桌面端 Shell。应用作为 Agent 的触点在其中运行。 |
+| 语言 | [OctoScript](https://github.com/OctoSense-org/OctoScript) | 由 Makepad 的 Splash 演化而来、面向 Agent 需求优化的动态 DSL。无需编译即可实时解释执行应用逻辑并生成界面。用起来像 JavaScript，底座是 Rust。 |
+| 渲染 | [OctoScript-Makepad](https://github.com/OctoSense-org/OctoScript-Makepad) · [OctoScript-Android](https://github.com/OctoSense-org/OctoScript-Android) · [OctoScript-OH](https://github.com/OctoSense-org/OctoScript-OH) | 把 OctoScript 渲染到 Makepad、Android 原生控件和 OpenHarmony ArkUI。 |
+| 应用 | [OctoSense-System-Apps](https://github.com/OctoSense-org/OctoSense-System-Apps) | 系统自带应用（新闻、相册、地图、相机、邮件），全部是受隔离约束的脚本应用，另含 AppCard 助手。各个 Shell 固定引用这个仓库的版本，并选择要内置哪些应用。 |
+| 应用商店 | [OctoSense-App-Hub](https://github.com/OctoSense-org/OctoSense-App-Hub) | 签名目录、准入检查、发布工具 `hub`，以及 `card-host`：按每个应用清单所申请的权限，把已安装的应用隔离运行。 |
+| 应用开发 | [OctoScript-App-Design-Flow](https://github.com/OctoSense-org/OctoScript-App-Design-Flow) | 应用开发工具集：设计流程（文字描述、草图或生成图 → 应用）、可运行的模板、`octo` 命令行、脚本 API 参考，以及发布到 App Hub 的完整步骤。 |
+| 内核 | [Octos](https://github.com/octos-org/octos) | 可嵌入的 Rust 原生 Agent harness。多轮交互、上下文与记忆、模型 provider、多 agent 并发、工具与沙箱、用户审批，全部通过 OS UI protocol 提供给上层应用。 |
 
 一切都经由 Octoscript 动态执行，不需要编译，所以一个应用可以在几秒内换一种风格、多一个板块，或者变成另一个应用，由 Agent 的洞察驱动。
 
 Card 之外还有一套 design system 流程：从一段文字描述生成 UI 概念图，概念图生成主题模板，一个主题模板又能派生出字体、配色、布局的无穷变化。主题来自用户的偏好，或按用户的选择生成，然后应用到所有 App Card。
 
+## 开发 OctoSense 应用
+
+任何人或编程 Agent 都可以为 OctoSense 开发应用，并发布到 App Hub。一个应用就是一个小包：`manifest.json` 声明所需权限，`main.splash` 是程序，再加上图片资源。应用在隔离环境中运行，并且从不收集密码：登录只在 OctoSense 自己的面板上进行。
+
+**编程 Agent 请按顺序先阅读：**
+
+1. [OctoScript-App-Design-Flow `AGENTS.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/AGENTS.md)：规则、完成标准，以及哪些环节必须停下来请人确认。
+2. [`flows/README.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/flows/README.md)：按起点（文字描述、草图、生成的界面图）选择设计流程，然后逐步执行该流程的 `FLOW.md`。
+3. [`docs/QUICKSTART.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/QUICKSTART.md) 和 [`docs/SCRIPT-API.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/SCRIPT-API.md)：用 `tools/octo` 创建并运行应用；只使用文档中列出的 API。
+4. [`docs/PUBLISHING.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/PUBLISHING.md) 以及 App Hub 的[发布规范](https://github.com/OctoSense-org/OctoSense-App-Hub/blob/main/docs/PUBLISHING.md)：打戳、截图、检查、签名、提交。
+
+[OctoSense-System-Apps](https://github.com/OctoSense-org/OctoSense-System-Apps) 中的系统应用就是同样结构的完整示例。
+
 ## 参与
 
-每个仓库都有各自的 README 和构建说明。想看整体运行效果，从 OctoSense 仓库开始。
+每个仓库都有各自的 README 和构建说明。想看整体运行效果，从 OctoSense-ROM 和 OctoSense-Desktop 开始。
