@@ -30,7 +30,7 @@ OctoSense 走的是另一条路：保留人们已经熟悉的交互方式，把 
 | Shell | [OctoSense-ROM](https://github.com/OctoSense-org/OctoSense-ROM) · [OctoSense-Desktop](https://github.com/OctoSense-org/OctoSense-Desktop) | 基于 [Makepad](https://github.com/OctoSense-org/makepad) 的 Agent 交互 Shell。OctoSense-ROM 的 `home/` 是手机 Shell，既可作为桌面应用安装，也可烧录进 ROM 镜像（OnePlus 6 上的 LineageOS）；OctoSense-Desktop 是桌面端 Shell。应用作为 Agent 的触点在其中运行。 |
 | 语言 | [OctoScript](https://github.com/OctoSense-org/OctoScript) | 由 Makepad 的 Splash 演化而来、面向 Agent 需求优化的动态 DSL。无需编译即可实时解释执行应用逻辑并生成界面。用起来像 JavaScript，底座是 Rust。 |
 | 渲染 | [OctoScript-Makepad](https://github.com/OctoSense-org/OctoScript-Makepad) · [OctoScript-Android](https://github.com/OctoSense-org/OctoScript-Android) · [OctoScript-OH](https://github.com/OctoSense-org/OctoScript-OH) | 把 OctoScript 渲染到 Makepad、Android 原生控件和 OpenHarmony ArkUI。 |
-| 应用 | [OctoSense-System-Apps](https://github.com/OctoSense-org/OctoSense-System-Apps) | 系统自带应用（新闻、相册、地图、相机、邮件），全部是受隔离约束的脚本应用，另含 AppCard 助手。各个 Shell 正在改为固定引用这个仓库的版本，并选择要内置哪些应用（[ROM #18](https://github.com/OctoSense-org/OctoSense-ROM/pull/18)、[Desktop #36](https://github.com/OctoSense-org/OctoSense-Desktop/pull/36)）。 |
+| 应用 | [OctoSense-System-Apps](https://github.com/OctoSense-org/OctoSense-System-Apps) | 系统自带应用（新闻、相册、地图、相机、邮件），全部是受隔离约束的脚本应用，另含 AppCard 助手。各个 Shell 固定引用这个仓库的版本，并选择要内置哪些应用。 |
 | 应用商店 | [OctoSense-App-Hub](https://github.com/OctoSense-org/OctoSense-App-Hub) | 签名目录、准入检查、发布工具 `hub`，以及 `card-host`：按每个应用清单所申请的权限，把已安装的应用隔离运行。 |
 | 应用开发 | [OctoScript-App-Design-Flow](https://github.com/OctoSense-org/OctoScript-App-Design-Flow) | 应用开发工具集：设计流程（文字描述或生成图 → 应用；Sketch 设计套件 → 主题套件）、可运行的模板、`octo` 命令行、脚本 API 参考，以及发布到 App Hub 的完整步骤。 |
 | 内核 | [Octos](https://github.com/octos-org/octos) | 可嵌入的 Rust 原生 Agent harness。多轮交互、上下文与记忆、模型 provider、多 agent 并发、工具与沙箱、用户审批，全部通过 Octos UI Protocol（OUP）提供给上层应用。 |
@@ -56,4 +56,4 @@ Card 之外还有一套 design system 流程：从一段文字描述生成 UI �
 
 ## 参与
 
-每个仓库都有各自的 README 和构建说明。想看整体运行效果，从 OctoSense-ROM 和 OctoSense-Desktop 开始。
+每个仓库都有各自的 README 和构建说明，并注明开发应用是否需要它。想看整体运行效果，从 OctoSense-ROM 和 OctoSense-Desktop 开始；OctoSense-Desktop 还能在发布前从本地目录安装并运行你自己的应用（[PUBLISHING §4](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/PUBLISHING.md#4-rehearse-the-store-path-locally)）。
