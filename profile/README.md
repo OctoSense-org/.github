@@ -45,7 +45,7 @@ A design system sits alongside the cards. From a written brief, generative AI pr
 
 Anyone, person or coding agent, can build an app for OctoSense and publish it on the App Hub. An app is a small bundle: a `manifest.json` that asks for the permissions it needs, a `main.splash` program, and its artwork. It runs contained, and it never collects a password: sign-in happens on OctoSense's own sheet.
 
-**Coding agents: read these first, in order.**
+**Coding agents: read these first, in order.** Any agent works (Codex, Claude Code, Cursor, Gemini CLI, GitHub Copilot) or none: every step is a shell command or a file edit, with no dependency on a particular agent, model or vendor.
 
 1. [OctoScript-App-Design-Flow `AGENTS.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/AGENTS.md): the rules, the definition of done, and where to stop and ask a person.
 2. [`flows/README.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/flows/README.md): pick the design flow for what you start from (a text brief or a generated image for an app; a Sketch design kit for a theme kit), then follow that flow's `FLOW.md` step by step.
