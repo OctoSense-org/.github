@@ -30,10 +30,12 @@ OctoSense 走的是另一条路：保留人们已经熟悉的交互方式，把 
 | Shell | [OctoSense-ROM](https://github.com/OctoSense-org/OctoSense-ROM) · [OctoSense-Desktop](https://github.com/OctoSense-org/OctoSense-Desktop) | 基于 [Makepad](https://github.com/OctoSense-org/makepad) 的 Agent 交互 Shell。OctoSense-ROM 的 `home/` 是手机 Shell，既可作为桌面应用安装，也可烧录进 ROM 镜像（OnePlus 6 上的 LineageOS）；OctoSense-Desktop 是桌面端 Shell。应用作为 Agent 的触点在其中运行。 |
 | 语言 | [OctoScript](https://github.com/OctoSense-org/OctoScript) | 由 Makepad 的 Splash 演化而来、面向 Agent 需求优化的动态 DSL。无需编译即可实时解释执行应用逻辑并生成界面。用起来像 JavaScript，底座是 Rust。 |
 | 渲染 | [OctoScript-Makepad](https://github.com/OctoSense-org/OctoScript-Makepad) · [OctoScript-Android](https://github.com/OctoSense-org/OctoScript-Android) · [OctoScript-OH](https://github.com/OctoSense-org/OctoScript-OH) | 把 OctoScript 渲染到 Makepad、Android 原生控件和 OpenHarmony ArkUI。 |
-| 应用 | [OctoSense-System-Apps](https://github.com/OctoSense-org/OctoSense-System-Apps) | 系统自带应用（新闻、相册、地图、相机、邮件），全部是受隔离约束的脚本应用，另含 AppCard 助手。各个 Shell 固定引用这个仓库的版本，并选择要内置哪些应用。 |
+| 应用 | [OctoSense-System-Apps](https://github.com/OctoSense-org/OctoSense-System-Apps) | 系统自带应用（新闻、相册、地图、相机、邮件），全部是受隔离约束的脚本应用，另含 AppCard 助手。各个 Shell 正在改为固定引用这个仓库的版本，并选择要内置哪些应用（[ROM #18](https://github.com/OctoSense-org/OctoSense-ROM/pull/18)、[Desktop #36](https://github.com/OctoSense-org/OctoSense-Desktop/pull/36)）。 |
 | 应用商店 | [OctoSense-App-Hub](https://github.com/OctoSense-org/OctoSense-App-Hub) | 签名目录、准入检查、发布工具 `hub`，以及 `card-host`：按每个应用清单所申请的权限，把已安装的应用隔离运行。 |
 | 应用开发 | [OctoScript-App-Design-Flow](https://github.com/OctoSense-org/OctoScript-App-Design-Flow) | 应用开发工具集：设计流程（文字描述、草图或生成图 → 应用）、可运行的模板、`octo` 命令行、脚本 API 参考，以及发布到 App Hub 的完整步骤。 |
-| 内核 | [Octos](https://github.com/octos-org/octos) | 可嵌入的 Rust 原生 Agent harness。多轮交互、上下文与记忆、模型 provider、多 agent 并发、工具与沙箱、用户审批，全部通过 OS UI protocol 提供给上层应用。 |
+| 内核 | [Octos](https://github.com/octos-org/octos) | 可嵌入的 Rust 原生 Agent harness。多轮交互、上下文与记忆、模型 provider、多 agent 并发、工具与沙箱、用户审批，全部通过 Octos UI Protocol（OUP）提供给上层应用。 |
+
+相关仓库：[makepad](https://github.com/OctoSense-org/makepad)（所有 Shell 与渲染器固定引用的 Makepad 分支）· [makepad-html](https://github.com/OctoSense-org/makepad-html)（Makepad 的原生 HTML/CSS 渲染）· [OctoScript-website](https://github.com/OctoSense-org/OctoScript-website)（语言指南、组件目录、WASM 演示）· [robrix2](https://github.com/OctoSense-org/robrix2)（基于 Makepad 的 Matrix 客户端）· [octosense-org.github.io](https://github.com/OctoSense-org/octosense-org.github.io)（OctoSense 官网）。
 
 一切都经由 Octoscript 动态执行，不需要编译，所以一个应用可以在几秒内换一种风格、多一个板块，或者变成另一个应用，由 Agent 的洞察驱动。
 
