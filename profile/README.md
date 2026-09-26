@@ -1,10 +1,10 @@
 # OctoSense
 
+English | [简体中文](README.zh-CN.md)
+
 **An agent shell on top of your operating system.**
 
 OctoSense is a layer that runs on Windows, macOS, Linux, Android, iOS and HarmonyOS. It looks like the launcher and the apps you already know, and it behaves like an agent that understands what you want, senses what is changing around you, and reshapes those apps before you ask.
-
-[中文说明](README.zh-CN.md)
 
 ## Why not another chat window?
 
