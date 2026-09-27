@@ -30,7 +30,7 @@ Every app you see is a touchpoint. Behind all of them is one agent with one memo
 | Shell | [OctoSense-ROM](https://github.com/OctoSense-org/OctoSense-ROM) · [OctoSense-Desktop](https://github.com/OctoSense-org/OctoSense-Desktop) | The agent shell, built on [Makepad](https://github.com/OctoSense-org/makepad). OctoSense-ROM's `home/` is the phone shell, installed either as a Home app or burned into the ROM image (LineageOS on the OnePlus 6); OctoSense-Desktop is the desktop shell. Apps run inside it as touchpoints of the agent. |
 | Language | [OctoScript](https://github.com/OctoSense-org/OctoScript) | A dynamic DSL evolved from Makepad's Splash and tuned for agents. Interprets app logic and generates UI in real time with no compile step. JavaScript-like on the surface, Rust underneath. |
 | Renderers | [OctoScript-Makepad](https://github.com/OctoSense-org/OctoScript-Makepad) · [OctoScript-Android](https://github.com/OctoSense-org/OctoScript-Android) · [OctoScript-OH](https://github.com/OctoSense-org/OctoScript-OH) | Render OctoScript to Makepad, native Android widgets, and OpenHarmony ArkUI. |
-| Apps | [OctoSense-System-Apps](https://github.com/OctoSense-org/OctoSense-System-Apps) | The first-party apps (News, Photos, Maps, Camera, Mail) as contained script apps, plus the AppCard assistant. The shells pin this repository and choose which apps to ship. |
+| Apps | [OctoSense-System-Apps](https://github.com/OctoSense-org/OctoSense-System-Apps) | The first-party apps (News, Photos, Maps, Camera, Mail and AI providers) as contained script apps, the host services behind them (Mail's `mail`, AI providers' `llm`), and the native AppCard assistant, which the shells build only when asked (`--features app-appcard`). The shells pin this repository and choose which apps to ship. |
 | App store | [OctoSense-App-Hub](https://github.com/OctoSense-org/OctoSense-App-Hub) | The signed catalog, the admission gate, the `hub` publishing tool and `card-host`, the runner that contains every installed app under the permissions its manifest asks for. |
 | Building apps | [OctoScript-App-Design-Flow](https://github.com/OctoSense-org/OctoScript-App-Design-Flow) | The app development harness: design flows (a text brief or a generated image → app; a Sketch design kit → a theme kit), a runnable template, the `octo` CLI, the script API reference and the path to publishing on the App Hub. |
 | Kernel | [Octos](https://github.com/octos-org/octos) | An embeddable, Rust-native agent harness. Multi-turn interaction, context and memory, model providers, concurrent agents, tools, sandboxing and user approval, exposed to apps through the Octos UI Protocol (OUP). |
@@ -44,6 +44,25 @@ A design system sits alongside the cards. From a written brief, generative AI pr
 ## Build an OctoSense app
 
 Anyone, person or coding agent, can build an app for OctoSense and publish it on the App Hub. An app is a small bundle: a `manifest.json` that asks for the permissions it needs, a `main.splash` program, and its artwork. It runs contained, and it never collects a password: sign-in happens on OctoSense's own sheet.
+
+Taking part in the [Agentic App Hackathon](https://create.gosim.org/agenticapp26/?lang=en)? This is the place to start; the hackathon page has the event details.
+
+### Start here (about 5 minutes to a running app, plus one build)
+
+You need macOS on Apple silicon (the verified platform; others are untested), Rust stable via [rustup](https://rustup.rs) with `~/.cargo/bin` on `PATH`, Python 3.9 or newer, a graphical session (the app runs in a real window), and about 1 GB of disk for the harness clone (`--depth 1` is fine), plus the build output.
+
+```sh
+mkdir octosense-ws && cd octosense-ws
+git clone --depth 1 https://github.com/OctoSense-org/OctoScript-App-Design-Flow.git
+git clone https://github.com/OctoSense-org/OctoSense-App-Hub.git
+cd OctoScript-App-Design-Flow && python3 tools/setup-native.py      # adds the pinned runtime beside it
+(cd ../OctoSense-App-Hub && cargo build --release -p octosense-card-host -p octosense-app-hub)
+tools/octo doctor                                                    # finds hub and card-host, or says how to fix it
+tools/octo new ~/apps/my-app --id my-notes --name "My Notes"
+tools/octo run ~/apps/my-app/bundle --port 8141 --detach
+```
+
+The [OctoScript-App-Design-Flow README](https://github.com/OctoSense-org/OctoScript-App-Design-Flow#quick-path) continues from there (edit, screenshot, `tools/octo check`, publish) and [QUICKSTART](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/QUICKSTART.md) has timings and the gotchas that cost the most time. What an app may do is a closed list of capabilities ([CAPABILITIES](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/CAPABILITIES.md)); installing your own bundle on a phone is not supported yet, so demo it in the runner or in OctoSense-Desktop from a local catalog.
 
 **Coding agents: read these first, in order.** Any agent works (Codex, Claude Code, Cursor, Gemini CLI, GitHub Copilot) or none: every step is a shell command or a file edit, with no dependency on a particular agent, model or vendor.
 
