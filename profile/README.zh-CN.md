@@ -30,7 +30,7 @@ OctoSense 走的是另一条路：保留人们已经熟悉的交互方式，把 
 | Shell | [OctoSense-ROM](https://github.com/OctoSense-org/OctoSense-ROM) · [OctoSense-Desktop](https://github.com/OctoSense-org/OctoSense-Desktop) | 基于 [Makepad](https://github.com/OctoSense-org/makepad) 的 Agent 交互 Shell。OctoSense-ROM 的 `home/` 是手机 Shell，既可作为桌面应用安装，也可烧录进 ROM 镜像（OnePlus 6 上的 LineageOS）；OctoSense-Desktop 是桌面端 Shell。应用作为 Agent 的触点在其中运行。 |
 | 语言 | [OctoScript](https://github.com/OctoSense-org/OctoScript) | 由 Makepad 的 Splash 演化而来、面向 Agent 需求优化的动态 DSL。无需编译即可实时解释执行应用逻辑并生成界面。用起来像 JavaScript，底座是 Rust。 |
 | 渲染 | [OctoScript-Makepad](https://github.com/OctoSense-org/OctoScript-Makepad) · [OctoScript-Android](https://github.com/OctoSense-org/OctoScript-Android) · [OctoScript-OH](https://github.com/OctoSense-org/OctoScript-OH) | 把 OctoScript 渲染到 Makepad、Android 原生控件和 OpenHarmony ArkUI。 |
-| 应用 | [OctoSense-System-Apps](https://github.com/OctoSense-org/OctoSense-System-Apps) | 系统自带应用（新闻、相册、地图、相机、邮件），全部是受隔离约束的脚本应用，另含 AppCard 助手。各个 Shell 固定引用这个仓库的版本，并选择要内置哪些应用。 |
+| 应用 | [OctoSense-System-Apps](https://github.com/OctoSense-org/OctoSense-System-Apps) | 系统自带应用（新闻、相册、地图、相机、邮件、AI 服务商），全部是受隔离约束的脚本应用；它们背后的宿主服务（邮件的 `mail`、AI 服务商的 `llm`）；以及原生的 AppCard 助手，Shell 只在明确要求时才构建它（`--features app-appcard`）。各个 Shell 固定引用这个仓库的版本，并选择要内置哪些应用。 |
 | 应用商店 | [OctoSense-App-Hub](https://github.com/OctoSense-org/OctoSense-App-Hub) | 签名目录、准入检查、发布工具 `hub`，以及 `card-host`：按每个应用清单所申请的权限，把已安装的应用隔离运行。 |
 | 应用开发 | [OctoScript-App-Design-Flow](https://github.com/OctoSense-org/OctoScript-App-Design-Flow) | 应用开发工具集：设计流程（文字描述或生成图 → 应用；Sketch 设计套件 → 主题套件）、可运行的模板、`octo` 命令行、脚本 API 参考，以及发布到 App Hub 的完整步骤。 |
 | 内核 | [Octos](https://github.com/octos-org/octos) | 可嵌入的 Rust 原生 Agent harness。多轮交互、上下文与记忆、模型 provider、多 agent 并发、工具与沙箱、用户审批，全部通过 Octos UI Protocol（OUP）提供给上层应用。 |
@@ -44,6 +44,25 @@ Card 之外还有一套 design system 流程：从一段文字描述生成 UI �
 ## 开发 OctoSense 应用
 
 任何人或编程 Agent 都可以为 OctoSense 开发应用，并发布到 App Hub。一个应用就是一个小包：`manifest.json` 声明所需权限，`main.splash` 是程序，再加上图片资源。应用在隔离环境中运行，并且从不收集密码：登录只在 OctoSense 自己的面板上进行。
+
+参加 [Agentic App 黑客松](https://create.gosim.org/agenticapp26/)？从这里开始；赛事详情以黑客松页面为准。
+
+### 从这里开始（约 5 分钟跑起一个应用，另需一次编译）
+
+需要 Apple 芯片的 macOS（已验证的平台，其他平台尚未测试）、通过 [rustup](https://rustup.rs) 安装的 Rust stable（并把 `~/.cargo/bin` 加入 `PATH`）、Python 3.9 或更高版本、图形界面会话（应用在真实窗口中运行），以及约 1 GB 磁盘空间用于克隆开发工具仓库（可以用 `--depth 1`），另加编译产物。
+
+```sh
+mkdir octosense-ws && cd octosense-ws
+git clone --depth 1 https://github.com/OctoSense-org/OctoScript-App-Design-Flow.git
+git clone https://github.com/OctoSense-org/OctoSense-App-Hub.git
+cd OctoScript-App-Design-Flow && python3 tools/setup-native.py      # 在旁边拉取固定版本的运行时
+(cd ../OctoSense-App-Hub && cargo build --release -p octosense-card-host -p octosense-app-hub)
+tools/octo doctor                                                    # 找到 hub 和 card-host，或给出修复方法
+tools/octo new ~/apps/my-app --id my-notes --name "My Notes"
+tools/octo run ~/apps/my-app/bundle --port 8141 --detach
+```
+
+后续步骤（修改、截图、`tools/octo check`、发布）见 [OctoScript-App-Design-Flow README](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/README.zh-CN.md)，耗时与最常见的坑见 [QUICKSTART](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/QUICKSTART.md)。应用能做什么由一份封闭的权限清单决定（[CAPABILITIES](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/CAPABILITIES.md)）；暂不支持把自己的应用包安装到手机上，演示请用运行器，或在 OctoSense-Desktop 中从本地目录安装。
 
 **编程 Agent 请按顺序先阅读：** 任何 Agent 都可以（Codex、Claude Code、Cursor、Gemini CLI、GitHub Copilot），不用 Agent 也可以：每一步都是一条 shell 命令或一次文件修改，不依赖特定的 Agent、模型或厂商。
 
