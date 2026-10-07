@@ -1,5 +1,7 @@
 # OctoSense
 
+<img src="https://raw.githubusercontent.com/OctoSense-org/.github/main/profile/logo.svg" width="96" height="96" alt="OctoSense" />
+
 [English](README.md) | 简体中文
 
 **运行在操作系统之上的 Agent 交互 Shell。**

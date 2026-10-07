@@ -1,5 +1,7 @@
 # OctoSense
 
+<img src="https://raw.githubusercontent.com/OctoSense-org/.github/main/profile/logo.svg" width="96" height="96" alt="OctoSense" />
+
 English | [简体中文](README.zh-CN.md)
 
 **An agent shell on top of your operating system.**
