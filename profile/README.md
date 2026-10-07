@@ -45,7 +45,7 @@ A design system sits alongside the cards. From a written brief, generative AI pr
 
 ## Build an OctoSense app
 
-Anyone, person or coding agent, can build an app for OctoSense and publish it on the App Hub. An app is a small bundle: a `manifest.json` that asks for the permissions it needs, a `listing.json` for the store, a `main.splash` program, and its artwork. It runs contained and never collects a password: OctoSense handles sign-in for it.
+Anyone, person or coding agent, can build an app for OctoSense and publish it on the App Hub. An app is a small bundle: a `manifest.json` that asks for the permissions it needs, a `listing.json` for the store, a `main.splash` program, and its artwork. It runs contained and never collects a password.
 
 Taking part in the [Agentic App Hackathon](https://create.gosim.org/agenticapp26/?lang=en)? This is the place to start; the hackathon page has the event details.
 
