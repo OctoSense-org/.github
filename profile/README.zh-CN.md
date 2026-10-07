@@ -45,7 +45,7 @@ OctoSense 走的是另一条路：保留人们已经熟悉的交互方式，把 
 
 ## 开发 OctoSense 应用
 
-任何人或编程 Agent 都可以为 OctoSense 开发应用，并发布到 App Hub。一个应用就是一个小型应用包：`manifest.json` 声明所需权限，`listing.json` 提供商店信息，`main.splash` 是程序，再加上素材。应用在隔离环境中运行，从不收集密码：登录由 OctoSense 负责。
+任何人或编程 Agent 都可以为 OctoSense 开发应用，并发布到 App Hub。一个应用就是一个小型应用包：`manifest.json` 声明所需权限，`listing.json` 提供商店信息，`main.splash` 是程序，再加上素材。应用在隔离环境中运行，从不收集密码。
 
 参加 [Agentic App 黑客松](https://create.gosim.org/agenticapp26/)？从这里开始；赛事详情以黑客松页面为准。
 
