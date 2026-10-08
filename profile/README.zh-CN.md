@@ -34,7 +34,7 @@ OctoSense 走的是另一条路：保留人们已经熟悉的交互方式，把 
 | 渲染 | [OctoScript-Makepad](https://github.com/OctoSense-org/OctoScript-Makepad) · [OctoScript-Android](https://github.com/OctoSense-org/OctoScript-Android) · [OctoScript-OH](https://github.com/OctoSense-org/OctoScript-OH) | 把 OctoScript 渲染到 Makepad、Android 原生控件和 OpenHarmony ArkUI。 |
 | 应用 | [OctoSense `apps/`](https://github.com/OctoSense-org/OctoSense/tree/main/apps) | 系统自带应用（新闻、相册、地图、相机、邮件、AI 提供商），全部是受隔离约束的脚本应用；它们背后的宿主服务（邮件的 `mail`、AI 提供商的 `llm`）；以及原生的 AppCard 助手，Shell 只在明确要求时才构建它（`--features app-appcard`）。它们随 Shell 一起发布、一起定版本。原仓库 OctoSense-System-Apps 已归档。 |
 | 应用商店 | [OctoSense-App-Hub](https://github.com/OctoSense-org/OctoSense-App-Hub) | 签名目录、准入检查、发布工具 `hub`，以及开发用的运行器 `card-host`：它按清单申请的权限，在隔离环境中运行一个应用包。 |
-| 应用开发 | [OctoScript-App-Design-Flow](https://github.com/OctoSense-org/OctoScript-App-Design-Flow) | 应用开发工具集：设计流程（文字描述或生成图 → 应用；Sketch 设计套件 → 主题套件）、可运行的模板、`octo` 命令行、脚本 API 参考，以及发布到 App Hub 的完整步骤。 |
+| 应用开发 | [OctoSense-App-Flow](https://github.com/OctoSense-org/OctoSense-App-Flow) | 应用开发工具集：设计流程（文字描述或生成图 → 应用；Sketch 设计套件 → 主题套件）、可运行的模板、`octo` 命令行、脚本 API 参考，以及发布到 App Hub 的完整步骤。 |
 | 内核 | [Octos](https://github.com/octos-org/octos) | 可嵌入的 Rust 原生 Agent harness。多轮交互、上下文与记忆、模型提供商、多 Agent 并发、工具与沙箱、用户确认，全部通过 Octos UI Protocol（OUP）提供给上层应用。 |
 
 相关仓库：[makepad](https://github.com/OctoSense-org/makepad)（所有 Shell 与渲染器固定引用的 Makepad 分支）· [makepad-html](https://github.com/OctoSense-org/makepad-html)（Makepad 的原生 HTML/CSS 渲染）· [OctoScript-website](https://github.com/OctoSense-org/OctoScript-website)（语言指南、组件目录、WASM 演示）· [robrix2](https://github.com/OctoSense-org/robrix2)（基于 Makepad 的 Matrix 客户端）· [octosense-org.github.io](https://github.com/OctoSense-org/octosense-org.github.io)（OctoSense 官网）。
@@ -55,27 +55,27 @@ OctoSense 走的是另一条路：保留人们已经熟悉的交互方式，把 
 
 ```sh
 mkdir octosense-ws && cd octosense-ws
-git clone --depth 1 https://github.com/OctoSense-org/OctoScript-App-Design-Flow.git
+git clone --depth 1 https://github.com/OctoSense-org/OctoSense-App-Flow.git
 git clone https://github.com/OctoSense-org/OctoSense-App-Hub.git
-cd OctoScript-App-Design-Flow && python3 tools/setup-native.py      # 在旁边拉取固定版本的运行时
+cd OctoSense-App-Flow && python3 tools/setup-native.py              # 在旁边拉取固定版本的运行时
 (cd ../OctoSense-App-Hub && cargo build --release -p octosense-card-host -p octosense-app-hub)
 tools/octo doctor                                                    # 找到 hub 和 card-host，或给出修复方法
 tools/octo new ~/apps/my-app --platform macos --id my-notes --name "My Notes"
 tools/octo run ~/apps/my-app/bundle --port 8141 --detach
 ```
 
-后续步骤（修改、截图、`tools/octo check`、发布）见 [OctoScript-App-Design-Flow README](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/README.zh-CN.md#快速上手)，耗时和最费时间的坑见 [QUICKSTART](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/QUICKSTART.zh-CN.md)。应用能做什么由一份封闭的能力列表决定（[CAPABILITIES](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/CAPABILITIES.zh-CN.md)）；暂不支持把自己的应用包安装到手机上，演示请用 `card-host`，或在从源码构建的 OctoSense 桌面端 Shell 中从本地签名目录安装。
+后续步骤（修改、截图、`tools/octo check`、发布）见 [OctoSense-App-Flow README](https://github.com/OctoSense-org/OctoSense-App-Flow/blob/main/README.zh-CN.md#快速上手)，耗时和最费时间的坑见 [QUICKSTART](https://github.com/OctoSense-org/OctoSense-App-Flow/blob/main/docs/QUICKSTART.zh-CN.md)。应用能做什么由一份封闭的能力列表决定（[CAPABILITIES](https://github.com/OctoSense-org/OctoSense-App-Flow/blob/main/docs/CAPABILITIES.zh-CN.md)）；暂不支持把自己的应用包安装到手机上，演示请用 `card-host`，或在从源码构建的 OctoSense 桌面端 Shell 中从本地签名目录安装。
 
 **编程 Agent 请按顺序先阅读：** 任何编程 Agent 都可以（Codex、Claude Code、Cursor、Gemini CLI、GitHub Copilot），手动操作也可以：每一步都是一条 shell 命令或一次文件修改，不依赖特定的 Agent、模型或厂商。
 
-1. [OctoScript-App-Design-Flow `AGENTS.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/AGENTS.md)：规则、完成标准，以及哪些环节必须停下来请人确认。
-2. [`flows/README.zh-CN.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/flows/README.zh-CN.md)：按起点选择设计流程（做应用：文字描述或生成的界面图；做主题套件：Sketch 设计套件），然后逐步执行该流程的 `FLOW.md`。
-3. [`docs/QUICKSTART.zh-CN.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/QUICKSTART.zh-CN.md) 和 [`docs/SCRIPT-API.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/SCRIPT-API.md)：用 `tools/octo` 创建并运行应用；只使用文档中列出的 API。
-4. [`docs/PUBLISHING.zh-CN.md`](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/PUBLISHING.zh-CN.md)：定稿清单和商店信息，完成截图，并通过准入检查。全部规则见 App Hub 的[发布参考](https://github.com/OctoSense-org/OctoSense-App-Hub/blob/main/docs/PUBLISHING.zh-CN.md)。
+1. [OctoSense-App-Flow `AGENTS.md`](https://github.com/OctoSense-org/OctoSense-App-Flow/blob/main/AGENTS.md)：规则、完成标准，以及哪些环节必须停下来请人确认。
+2. [`flows/README.zh-CN.md`](https://github.com/OctoSense-org/OctoSense-App-Flow/blob/main/flows/README.zh-CN.md)：按起点选择设计流程（做应用：文字描述或生成的界面图；做主题套件：Sketch 设计套件），然后逐步执行该流程的 `FLOW.md`。
+3. [`docs/QUICKSTART.zh-CN.md`](https://github.com/OctoSense-org/OctoSense-App-Flow/blob/main/docs/QUICKSTART.zh-CN.md) 和 [`docs/SCRIPT-API.md`](https://github.com/OctoSense-org/OctoSense-App-Flow/blob/main/docs/SCRIPT-API.md)：用 `tools/octo` 创建并运行应用；只使用文档中列出的 API。
+4. [`docs/PUBLISHING.zh-CN.md`](https://github.com/OctoSense-org/OctoSense-App-Flow/blob/main/docs/PUBLISHING.zh-CN.md)：定稿清单和商店信息，完成截图，并通过准入检查。全部规则见 App Hub 的[发布参考](https://github.com/OctoSense-org/OctoSense-App-Hub/blob/main/docs/PUBLISHING.zh-CN.md)。
 5. App Hub 的 [`docs/SUBMITTING.zh-CN.md`](https://github.com/OctoSense-org/OctoSense-App-Hub/blob/main/docs/SUBMITTING.zh-CN.md)：逐步完成签名、冻结发布并开提交 issue。其中的三个参考应用（GitHub Notes、Inbox Assistant 和 Google Calendar）都是可以对照学习的完整提交。
 
-[OctoSense `apps/`](https://github.com/OctoSense-org/OctoSense/tree/main/apps) 中的系统应用就是同样结构的完整示例（见各应用的 `bundle/`）。如果应用要使用用户的 GitHub、Gmail 或 Google 日历账户，请从 Design Flow 的[连接账户示例](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/tree/main/examples/connected-apps)开始，那里是三个参考应用的开发副本。
+[OctoSense `apps/`](https://github.com/OctoSense-org/OctoSense/tree/main/apps) 中的系统应用就是同样结构的完整示例（见各应用的 `bundle/`）。如果应用要使用用户的 GitHub、Gmail 或 Google 日历账户，请从 App Flow 的[连接账户示例](https://github.com/OctoSense-org/OctoSense-App-Flow/tree/main/examples/connected-apps)开始，那里是三个参考应用的开发副本。
 
 ## 参与
 
-每个仓库都有各自的 README 和构建说明，并注明开发应用是否需要它。想看整体运行效果（桌面或手机），从 [OctoSense](https://github.com/OctoSense-org/OctoSense) 开始；它的桌面端 Shell 还能在发布前从本地签名目录安装并运行你自己的应用（[PUBLISHING §4](https://github.com/OctoSense-org/OctoScript-App-Design-Flow/blob/main/docs/PUBLISHING.zh-CN.md#4-在本地演练商店流程)）。
+每个仓库都有各自的 README 和构建说明，并注明开发应用是否需要它。想看整体运行效果（桌面或手机），从 [OctoSense](https://github.com/OctoSense-org/OctoSense) 开始；它的桌面端 Shell 还能在发布前从本地签名目录安装并运行你自己的应用（[PUBLISHING §4](https://github.com/OctoSense-org/OctoSense-App-Flow/blob/main/docs/PUBLISHING.zh-CN.md#4-在本地演练商店流程)）。
